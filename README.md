@@ -1,5 +1,10 @@
 # SpringBootのジョブフローの純バッチアプリケーションサンプル
 
+> [!WARNING]
+>
+> 現在、サンプルAPを作成中です。
+
+
 ## 概要
 * Spring BootでAWS Step Functionsを使って、ステートマシンをジョブの実行順序を管理するジョブフローとして実行する、バッチのサンプルAPである。
 アプリケーションは、Spring Batchを使用しており、Step FunctionsのステートマシンからAWS Batchを利用して指定されたジョブIDとパラメータのジョブを実行するようになっている。
