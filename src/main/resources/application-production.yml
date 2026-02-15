@@ -1,0 +1,67 @@
+spring:
+  sql:
+    init:
+      platform: postgresql
+      mode: always
+  datasource:    
+    url: jdbc:postgresql://localhost:5432/testdb
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: password
+    # PostgreSQLはデフォルトautocommit=trueなので、カーソルがオンメモリ処理にならないようautocommit=false
+    hikari:
+      auto-commit: false
+  # デモAPとして簡単のためSpringBatchのテーブルのPostgreSQLのスキーマを起動時に作成（本来は、DDLを実行し事前作成すべき）
+  batch:
+    jdbc:
+      initialize-schema: always
+# Spring Cloud for AWS Parameter Store Integration & Secrets Manager Integration Enabled
+  cloud:
+    aws:
+      parameterstore:
+        enabled: true
+      secretsmanager:
+        enabled: true
+  config:
+    import:
+      - optional:aws-parameterstore:/config/${PROJECT_NAME}/${ENV_NAME}/common/;/config/${PROJECT_NAME}/${ENV_NAME}/${spring.application.name}/      
+      - optional:aws-secretsmanager:${DB_SECRETS_NAME}?prefix=spring.datasource.
+management:
+  endpoints:
+    web:
+      discovery:
+        enabled: false
+# Metrics enabled        
+  metrics:
+    enable:
+      all: false
+      system: true
+      process: true
+      disk: true
+      jvm: true
+      hikaricp: true
+      mybatis: true
+# Spring Cloud for AWS Micrometer CloudWatch Metrics Integration Enabled        
+  cloudwatch:
+    metrics:
+      export:
+        enabled: true
+        namespace: ${spring.application.name}
+resilience4j:
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 3s
+
+# 拡張フレームワーク機能の設定
+example:
+  s3:
+    bucket: mysd33bucket123
+    region: ap-northeast-1
+# 業務APの設定    
+  api:
+    backend:
+      url: http://localhost:8000
+    retry:
+      max-attempts: 3
+      min-backoff: 200

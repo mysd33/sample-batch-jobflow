@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: sample-batch-jobflow
+  profiles:
+    active:
+    - dev
+    - log_default  #logging in default format
+#    - log_container  #logging in json format
+  main:
+    web-application-type: none
+  messages:
+    basename: messages, messages-fw-common, messages-fw-batch, messages-common
+# Spring Batch    
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      isolation-level-for-create: READ_COMMITTED
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+# Virtual Thread                  
+  threads:
+    virtual:
+      enabled: true
+# Transaction Rollback
+  transaction:
+    rollback-on-commit-failure: true			
+# HikariCP AutoCommit false
+  datasource:
+    hikari:
+      auto-commit: false
+# Spring Cloud for AWS Parameter Store Integration & Secrets Manager Integration
+# Default Disabled For Local Development
+  cloud:
+    aws:
+      parameterstore:
+        enabled: false
+      secretsmanager:
+        enabled: false
+
+# Spring Cloud for AWS Micrometer CloudWatch Integration Common Configuration
+# Default Disabled For Local Development
+management:
+  cloudwatch:
+    metrics:
+      export:
+        enabled: false
+        step: 10s
+
+# Mybatis
+mybatis:
+  type-aliases-package: com.example.batch.domain.model
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 10
+
+# Spring Cloud Circuit Breaker TimeLimiter
+resilience4j:
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 3s
+
+logging:
+  level:
+    org.springframework.context.support.ResourceBundleMessageSource: ERROR
+
+# 拡張フレームワーク機能の設定
+example:
+  batch:
+    type: commandline
