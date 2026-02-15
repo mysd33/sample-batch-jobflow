@@ -27,6 +27,7 @@ import com.example.batch.job.common.record.TodoRecord;
 import com.example.fw.batch.core.config.SpringBatchConfigPackage;
 import com.example.fw.batch.core.exception.DefaultExceptionHandler;
 import com.example.fw.batch.core.exception.ExceptionHandler;
+import com.example.fw.batch.jobflow.config.JobflowConfigPackage;
 
 /**
  * 
@@ -34,7 +35,8 @@ import com.example.fw.batch.core.exception.ExceptionHandler;
  *
  */
 @Configuration
-@ComponentScan(basePackageClasses = SpringBatchConfigPackage.class)
+// バッチAP実行制御機能とジョブフロー実行支援機能の有効化
+@ComponentScan(basePackageClasses = { SpringBatchConfigPackage.class, JobflowConfigPackage.class })
 public class JobConfig {
 
     /**
