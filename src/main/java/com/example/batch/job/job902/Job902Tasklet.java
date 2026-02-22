@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  * コマンドライン実行例
  * 
  * <pre>{@code
- * java -jar app.jar --spring.profiles.active=production,log_default. --spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}" taskToken=xxxxx
+ * java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}" taskToken=xxxxx
  * }</pre>
  */
 @StepScope
