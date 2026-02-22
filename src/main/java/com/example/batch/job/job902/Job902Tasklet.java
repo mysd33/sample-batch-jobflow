@@ -46,7 +46,7 @@ public class Job902Tasklet implements Tasklet {
         appLogger.debug("Job902Tasklet実行[inputData:{}]", inputData);
         // Job901の処理結果取得
         Job901ResultData job901ResultData = objectMapper.readValue(inputData, Job901ResultData.class);
-        appLogger.debug("Job901の処理結果[result:{}]", job901ResultData.getResult());
+        appLogger.debug("Job901から受け取った処理結果[result:{}]", job901ResultData.getResult());
 
         // 処理結果はダミーの値をセットしている。
         // 実際はJob902Taskletの処理結果をセットする。

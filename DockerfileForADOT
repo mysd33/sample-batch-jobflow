@@ -1,0 +1,25 @@
+FROM public.ecr.aws/amazoncorretto/amazoncorretto:21
+RUN yum install -y shadow-utils
+ARG USERNAME=app
+ARG GROUPNAME=app
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd -g $GID $GROUPNAME && \
+    useradd -m -s /bin/bash -u $UID -g $GID $USERNAME
+RUN chown -R $USERNAME:$GROUPNAME /tmp
+
+RUN curl -o /opt/aws-opentelemetry-agent.jar -L https://github.com/aws-observability/aws-otel-java-instrumentation/releases/latest/download/aws-opentelemetry-agent.jar
+
+USER $USERNAME
+VOLUME [ "/tmp" ]
+WORKDIR /home/$USERNAME/
+
+COPY target/*.jar app.jar
+
+ENV JAVA_TOOL_OPTIONS=-javaagent:/opt/aws-opentelemetry-agent.jar \
+    OTEL_PROPAGATORS=xray
+
+ENTRYPOINT [ "java", "-jar", "app.jar"]
+# Example Job901. Overwrite parameters
+CMD ["--spring.batch.job.name=job901", "inputData=input901", "taskToken=dummy" ]

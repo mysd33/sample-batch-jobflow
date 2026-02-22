@@ -159,30 +159,34 @@ postgres> CREATE DATABASE testdb;
 ```
 * ローカルでDockerビルド
 ```sh
-docker build -t XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch:latest .
+docker build -t XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest .
 ```
 
 * ローカルでDocker実行（Profileを「dev」でSpringBoot実行）
 ```sh
-docker run -d -p 8001:8001 --name samplebatch --env SPRING_PROFILES_ACTIVE=dev,log_default --env SERVER_PORT=8001 --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/testdb --env API_BACKEND_URL=http://host.docker.internal:8000 XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch:latest
+# job901を実行する例。引数で、ジョブID、ジョブの入力データ、タスクトークンを渡す例。
+docker run --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=dev,log_default XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest --spring.batch.job.name=job901 inputData=input901 taskToken=dummy
+# job902を実行する例。引数で、ジョブID、ジョブの入力データ、タスクトークンを渡す例。
+docker run --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=dev,log_default XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest --spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}" taskToken=dummy
 
 #logをjson形式に変更する場合
-docker run -d -p 8001:8001 --name samplebatch --env SPRING_PROFILES_ACTIVE=dev,log_container --env SERVER_PORT=8001 --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/testdb --env API_BACKEND_URL=http://host.docker.internal:8000 XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch:latest
+docker run --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=dev,log_container XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest
 ```
+
 
 * ローカルでDocker実行（Profileを「production」でSpringBoot実行）　
     * ※Redisのローカル起動、PostgreSQLのローカル起動も必要
 ```sh
-docker run -d -p 8001:8001 -v %USERPROFILE%\.aws\:/home/app/.aws/ --name samplebatch --env SPRING_PROFILES_ACTIVE=production,log_default --env SERVER_PORT=8001 --env API_BACKEND_URL=http://host.docker.internal:8000 --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/testdb XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch:latest
+docker run -v %USERPROFILE%\.aws\:/home/app/.aws/ --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=production,log_default --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/testdb XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest
 
 #logをjson形式に変更する場合
-docker run -d -p 8001:8001 -v %USERPROFILE%\.aws\:/home/app/.aws/ --name samplebatch --env SPRING_PROFILES_ACTIVE=production,log_container --env SERVER_PORT=8001 --env API_BACKEND_URL=http://host.docker.internal:8000 --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/testdb XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch:latest
+docker run -v %USERPROFILE%\.aws\:/home/app/.aws/ --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=production,log_container --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/testdb XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest
 ```
 
 * ECRプッシュ
 ```sh
 aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com
-docker push XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch:latest
+docker push XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest
 ```
 
 ## ソフトウェアフレームワーク
