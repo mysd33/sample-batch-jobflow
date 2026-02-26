@@ -16,4 +16,4 @@ WORKDIR /home/$USERNAME/
 COPY target/*.jar app.jar
 ENTRYPOINT [ "java", "-jar", "app.jar"]
 # Example Job901. Overwrite parameters
-CMD ["--spring.batch.job.name=job901", "inputData=input901", "taskToken=dummy" ]
+CMD ["--spring.batch.job.name=job901", "inputData=input901", "taskToken=dummy"]
