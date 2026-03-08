@@ -14,7 +14,7 @@
 
     ![コマンド実行](img/sample-batch-commandline.png)
 
-    ![ジョブフロー](img/sample-batch-stepfunctions.png)    
+    ![ジョブフロー](img/sample-batch-jobflow.png)    
 
 * 本サンプルAPのソフトウェアアーキテクチャの図は以下の通り。
 
