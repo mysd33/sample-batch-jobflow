@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  * コマンドライン実行例
  * 
  * <pre>{@code
- * java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}" taskToken=xxxxx
+ * java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}"
  * }</pre>
  */
 @StepScope
@@ -36,10 +36,12 @@ public class Job902Tasklet implements Tasklet {
     private final ObjectMapper objectMapper;
 
     // ジョブパラメータの例
-    @Value("#{jobParameters['taskToken']}")
-    private String taskToken;
     @Value("#{jobParameters['inputData']}")
     private String inputData;
+
+    // StepFunctionsのタスクトークンはOS環境変数TASK_TOKENから取得
+    @Value("${TASK_TOKEN}")
+    private String taskToken;
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
