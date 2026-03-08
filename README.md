@@ -7,11 +7,14 @@
 
 ## 概要
 * Spring BootでAWS Step Functionsを使って、ステートマシンをジョブの実行順序を管理するジョブフローとして実行する、バッチのサンプルAPである。
-アプリケーションは、Spring Batchを使用しており、Step FunctionsのステートマシンからAWS Batchを利用して指定されたジョブIDとパラメータのジョブを実行するようになっている。
-
-    * TODO: 実装イメージ
+* アプリケーションは、Spring Batchを使用しており、コマンドライン引数で指定されたジョブIDとジョブの入力データをもとに、ジョブを実行するようになっている。
+* Step Functionsのステートマシンからジョブの実行順序制御（実行順序制御するフローを「ジョブフロー」と呼ぶことにする）を行う。
+* ステートマシンから各ステートでAWS Batchを起動しコマンド引数で指定されたジョブIDとパラメータのジョブを実行するようになっている。
+* Step FunctionsのタスクトークンとAPIを利用して、ジョブの処理結果を、後続のフローおよびジョブの入力として引き渡せる仕組みも用意している。
 
     ![コマンド実行](img/sample-batch-commandline.png)
+
+    ![ジョブフロー](img/sample-batch-stepfunctions.png)    
 
 * 本サンプルAPのソフトウェアアーキテクチャの図は以下の通り。
 
@@ -36,7 +39,14 @@
 
 ## 動作手順
 
-* TODO:今後記載予定
+* Step Functionsを使ったAWS上での動作確認は、[こちら](https://github.com/mysd33/ecs-on-fargate-adot-cfn-demo)のCloudFormationのサンプルテンプレートを利用して、AWS上にAPをデプロイし、Step Functionsのステートマシンからジョブフローを実行することで可能である。
+
+
+* ローカル上でのAP動作は、ジョブごとでの実行のみが可能である。
+
+> [!WARNING]
+>
+> 現在、執筆中
 
 
 ## PostgreSQLのローカル起動
