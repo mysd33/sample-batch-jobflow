@@ -37,7 +37,7 @@ public class Job901Tasklet implements Tasklet {
     private String inputData;
 
     // StepFunctionsのタスクトークンはOS環境変数TASK_TOKENから取得
-    @Value("${TASK_TOKEN}")
+    @Value("${TASK_TOKEN:}")
     private String taskToken;
 
     @Override
