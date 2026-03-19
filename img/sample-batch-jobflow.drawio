@@ -91,7 +91,7 @@
         <mxCell id="NzkTCUidwVeVQEC1Tya--20" parent="NzkTCUidwVeVQEC1Tya--15" style="rounded=1;whiteSpace=wrap;html=1;" value="ジョブ1" vertex="1">
           <mxGeometry height="47" width="80" x="50" y="123" as="geometry" />
         </mxCell>
-        <mxCell id="NzkTCUidwVeVQEC1Tya--21" parent="NzkTCUidwVeVQEC1Tya--15" style="rounded=1;whiteSpace=wrap;html=1;" value="ジョブ1" vertex="1">
+        <mxCell id="NzkTCUidwVeVQEC1Tya--21" parent="NzkTCUidwVeVQEC1Tya--15" style="rounded=1;whiteSpace=wrap;html=1;" value="ジョブ2" vertex="1">
           <mxGeometry height="47" width="80" x="50" y="240" as="geometry" />
         </mxCell>
         <mxCell id="NzkTCUidwVeVQEC1Tya--22" edge="1" parent="NzkTCUidwVeVQEC1Tya--1" source="NzkTCUidwVeVQEC1Tya--20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="NzkTCUidwVeVQEC1Tya--25" value="&lt;div&gt;コンテナ起動&amp;amp;&lt;/div&gt;javaコマンドで&lt;div&gt;ジョブ1実行&lt;/div&gt;">
@@ -115,7 +115,7 @@
         <mxCell id="NzkTCUidwVeVQEC1Tya--25" parent="NzkTCUidwVeVQEC1Tya--1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.batch;" value="&lt;div&gt;ジョブ1&lt;/div&gt;(AWS Batch)" vertex="1">
           <mxGeometry height="45" width="45" x="1890" y="245" as="geometry" />
         </mxCell>
-        <mxCell id="NzkTCUidwVeVQEC1Tya--26" parent="NzkTCUidwVeVQEC1Tya--1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.batch;" value="&lt;div&gt;ジョブ1&lt;/div&gt;(AWS Batch)" vertex="1">
+        <mxCell id="NzkTCUidwVeVQEC1Tya--26" parent="NzkTCUidwVeVQEC1Tya--1" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.batch;" value="&lt;div&gt;ジョブ2&lt;/div&gt;(AWS Batch)" vertex="1">
           <mxGeometry height="45" width="45" x="1890" y="363" as="geometry" />
         </mxCell>
         <mxCell id="NzkTCUidwVeVQEC1Tya--27" connectable="0" parent="NzkTCUidwVeVQEC1Tya--1" style="group" value="" vertex="1">
