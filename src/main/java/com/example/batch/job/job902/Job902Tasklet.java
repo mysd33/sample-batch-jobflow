@@ -53,8 +53,10 @@ public class Job902Tasklet implements Tasklet {
         // 処理結果はダミーの値をセットしている。
         // 実際はJob902Taskletの処理結果をセットする。
         Job902ResultData job902ResultData = Job902ResultData.builder().result("result_job902").build();
+        // ジョブインスタンスIDを取得
+        long jobInstanceId = chunkContext.getStepContext().getJobInstanceId();
         // ジョブフローの後続ジョブへ結果を渡すために、StepFunctionsのタスクの実行成功を送信する
-        sfnTaskResultSender.sendTaskSuccess(taskToken, job902ResultData);
+        sfnTaskResultSender.sendTaskSuccess(jobInstanceId, taskToken, job902ResultData);
 
         return RepeatStatus.FINISHED;
     }
