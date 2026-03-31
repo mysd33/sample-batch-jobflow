@@ -46,6 +46,11 @@ management:
       export:
         enabled: false
         step: 10s
+# Disabled Tracing Exporting By Zipkin
+  tracing:
+    export:
+      zipkin:
+        enabled: false 
 
 # Mybatis
 mybatis:

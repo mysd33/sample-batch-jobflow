@@ -26,9 +26,7 @@ public class MessageIdConstClassGens {
 		Class<?> targetClazz = MessageIds.class;
 		File output = new File("src/main/java/" + targetClazz.getName().replaceAll(Pattern.quote("."), "/") + ".java");
 		System.out.println("write " + output.getAbsolutePath());
-		PrintWriter pw = new PrintWriter(output);
-
-		try {
+		try (PrintWriter pw = new PrintWriter(output)) {
 			pw.println("package " + targetClazz.getPackage().getName() + ";");
 			pw.println("/**");
 			pw.println(" * Message Id");
@@ -45,7 +43,6 @@ public class MessageIdConstClassGens {
 			pw.flush();
 		} finally {
 			br.close();
-			pw.close();
 		}
 	}
 	private static void writeConst(PrintWriter pw, String line) {
