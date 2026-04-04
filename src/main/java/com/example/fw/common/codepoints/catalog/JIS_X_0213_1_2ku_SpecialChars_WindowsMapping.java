@@ -2,7 +2,6 @@ package com.example.fw.common.codepoints.catalog;
 
 import java.io.Serial;
 
-
 import org.terasoluna.gfw.common.codepoints.CodePoints;
 
 /**
@@ -10,7 +9,7 @@ import org.terasoluna.gfw.common.codepoints.CodePoints;
  */
 public final class JIS_X_0213_1_2ku_SpecialChars_WindowsMapping extends CodePoints {
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5814903212987182905L;
 
     /**
      * コンストラクタ

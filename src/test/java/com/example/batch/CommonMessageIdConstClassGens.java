@@ -18,14 +18,14 @@ import com.example.batch.domain.message.CommonMessageIds;
  *
  */
 public class CommonMessageIdConstClassGens {
-    public static void main(String[] args) throws IOException {
+    void main() throws IOException {
         // message properties file
         InputStream inputStream = new FileInputStream("src/main/resources/messages-common.properties");
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         Class<?> targetClazz = CommonMessageIds.class;
         File output = new File("src/main/java/" + targetClazz.getName().replaceAll(Pattern.quote("."), "/") + ".java");
-        System.out.println("write " + output.getAbsolutePath());
-        try (PrintWriter pw = new PrintWriter(output)) {
+        IO.println("write " + output.getAbsolutePath());
+        try (PrintWriter pw = new PrintWriter(output); br) {
             pw.println("package " + targetClazz.getPackage().getName() + ";");
             pw.println("/**");
             pw.println(" * Message Id");
@@ -40,8 +40,6 @@ public class CommonMessageIdConstClassGens {
             }
             pw.println("}");
             pw.flush();
-        } finally {
-            br.close();
         }
     }
 

@@ -19,14 +19,14 @@ import com.example.batch.domain.message.MessageIds;
  *
  */
 public class MessageIdConstClassGens {
-	public static void main(String[] args) throws IOException {
+	void main() throws IOException {
 		// message properties file
 		InputStream inputStream = new FileInputStream("src/main/resources/messages.properties");
 		BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 		Class<?> targetClazz = MessageIds.class;
 		File output = new File("src/main/java/" + targetClazz.getName().replaceAll(Pattern.quote("."), "/") + ".java");
-		System.out.println("write " + output.getAbsolutePath());
-		try (PrintWriter pw = new PrintWriter(output)) {
+        IO.println("write " + output.getAbsolutePath());
+		try (PrintWriter pw = new PrintWriter(output); br) {
 			pw.println("package " + targetClazz.getPackage().getName() + ";");
 			pw.println("/**");
 			pw.println(" * Message Id");
@@ -41,8 +41,6 @@ public class MessageIdConstClassGens {
 			}
 			pw.println("}");
 			pw.flush();
-		} finally {
-			br.close();
 		}
 	}
 	private static void writeConst(PrintWriter pw, String line) {
