@@ -12,10 +12,10 @@ import com.example.batch.job.job901.Job901ResultData;
 import com.example.fw.batch.jobflow.sfn.SfnTaskResultSender;
 import com.example.fw.common.logging.ApplicationLogger;
 import com.example.fw.common.logging.LoggerFactory;
-import tools.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Job902のTasklet<br>
@@ -53,10 +53,8 @@ public class Job902Tasklet implements Tasklet {
         // 処理結果はダミーの値をセットしている。
         // 実際はJob902Taskletの処理結果をセットする。
         Job902ResultData job902ResultData = Job902ResultData.builder().result("result_job902").build();
-        // ジョブインスタンスIDを取得
-        long jobInstanceId = chunkContext.getStepContext().getJobInstanceId();
         // ジョブフローの後続ジョブへ結果を渡すために、StepFunctionsのタスクの実行成功を送信する
-        sfnTaskResultSender.sendTaskSuccess(jobInstanceId, taskToken, job902ResultData);
+        sfnTaskResultSender.sendTaskSuccess(taskToken, job902ResultData);
 
         return RepeatStatus.FINISHED;
     }

@@ -47,10 +47,8 @@ public class Job901Tasklet implements Tasklet {
         // 実際はJob901Taskletの処理結果をセットする。
         Job901ResultData job901ResultData = Job901ResultData.builder().result("result_job901").build();
 
-        // ジョブインスタンスIDを取得
-        long jobInstanceId = chunkContext.getStepContext().getJobInstanceId();
         // ジョブフローの後続ジョブへ結果を渡すために、StepFunctionsのタスクの実行成功を送信する
-        sfnTaskResultSender.sendTaskSuccess(jobInstanceId, taskToken, job901ResultData);
+        sfnTaskResultSender.sendTaskSuccess(taskToken, job901ResultData);
 
         return RepeatStatus.FINISHED;
     }
