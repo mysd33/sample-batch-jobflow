@@ -12,5 +12,5 @@ import lombok.Value;
 @Builder
 public class Job901ResultData {
     // 処理結果の例
-    private final String result;
+    String result;
 }

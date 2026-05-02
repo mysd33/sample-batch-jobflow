@@ -22,12 +22,12 @@ public interface UserRepository {
      * 
      * @return 取得結果
      */
-    public Cursor<User> findAllForPartitioning(int dataSize, int offset);
+    Cursor<User> findAllForPartitioning(int dataSize, int offset);
 
     /**
      * ユーザ件数を取得する
      * 
      * @return 件数
      */
-    public int count();
+    int count();
 }

@@ -1,5 +1,6 @@
 package com.example.batch.job.job902;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.StepContribution;
@@ -44,7 +45,7 @@ public class Job902Tasklet implements Tasklet {
     private String taskToken;
 
     @Override
-    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+    public RepeatStatus execute(@NonNull StepContribution contribution, @NonNull ChunkContext chunkContext) throws Exception {
         appLogger.debug("Job902Tasklet実行[inputData:{}]", inputData);
         // Job901の処理結果取得
         Job901ResultData job901ResultData = objectMapper.readValue(inputData, Job901ResultData.class);

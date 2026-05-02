@@ -18,5 +18,5 @@ public interface UserTempInfoRepository {
      * @param user ユーザ情報
      * @return 登録結果
      */
-    public boolean insert(UserTempInfo user);
+    boolean insert(UserTempInfo user);
 }
