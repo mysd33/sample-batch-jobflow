@@ -18,15 +18,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
 
-/**
- * Job902のTasklet<br>
- * 
- * コマンドライン実行例
- * 
- * <pre>{@code
- * java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}"
- * }</pre>
- */
+/// Job902のTasklet<br>
+///
+/// コマンドライン実行例
+///
+/// ``````
+///
+/// java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}"
+/// ``````
 @StepScope
 @Component
 @Slf4j

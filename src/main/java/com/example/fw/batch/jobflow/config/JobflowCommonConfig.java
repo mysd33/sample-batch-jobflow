@@ -16,11 +16,7 @@ import com.example.fw.common.systemdate.config.SystemDateConfig;
 
 import lombok.RequiredArgsConstructor;
 
-/**
- * 
- * ジョブフローによる起動用の設定クラス
- *
- */
+/// ジョブフローによる起動用の設定クラス
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(JobflowConfigurationProperties.class)
@@ -28,9 +24,7 @@ import lombok.RequiredArgsConstructor;
 @MapperScan(basePackageClasses = { SfnRepositoryPackage.class }, annotationClass = Mapper.class)
 public class JobflowCommonConfig {
 
-    /**
-     * ジョブフローのタスク結果を永続化するサービスのBean定義
-     */
+    /// ジョブフローのタスク結果を永続化するサービスのBean定義
     @Bean
     SfnTaskResultPersistService sfnTaskResultPersistService(SfnTaskResultRepository repository, SystemDate systemDate) {
         return new DefaultSfnTaskResultPersistService(repository, systemDate);

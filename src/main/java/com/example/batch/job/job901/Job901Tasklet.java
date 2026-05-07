@@ -16,15 +16,14 @@ import com.example.fw.common.logging.LoggerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Job901のTasklet<br>
- * 
- * コマンドライン実行例
- * 
- * <pre>{@code
- * java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job901 inputData=input901
- * }</pre>
- */
+/// Job901のTasklet<br>
+///
+/// コマンドライン実行例
+///
+/// ``````
+///
+/// java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job901 inputData=input901
+/// ``````
 @StepScope
 @Component
 @Slf4j

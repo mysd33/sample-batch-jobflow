@@ -12,10 +12,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.RequiredArgsConstructor;
 
-/**
- * Job902の定義<br>
- * Job902Taskletを実行するJobの例
- */
+/// Job902の定義<br>
+/// Job902Taskletを実行するJobの例
 @Configuration
 @RequiredArgsConstructor
 public class Job902Config {
@@ -23,9 +21,7 @@ public class Job902Config {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
 
-    /**
-     * Job
-     */
+    /// Job
     @Bean
     Job job902(JobExecutionListener listener) {
         return new JobBuilder("job902", jobRepository)//
@@ -34,9 +30,7 @@ public class Job902Config {
                 .build();
     }
 
-    /**
-     * Step
-     */
+    /// Step
     @Bean
     Step step90201() {
         return new StepBuilder("step902_01", jobRepository)//

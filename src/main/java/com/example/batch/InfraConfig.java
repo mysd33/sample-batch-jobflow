@@ -12,11 +12,7 @@ import com.example.fw.common.logging.config.LoggingConfigPackage;
 import com.example.fw.common.metrics.config.MetricsConfig;
 import com.example.fw.common.objectstorage.config.S3ConfigPackage;
 
-/**
- * 
- * インフラストラクチャ層の設定クラス
- *
- */
+/// インフラストラクチャ層の設定クラス
 @Configuration
 // RESTクライアント、オブジェクトストレージアクセス、ロギング拡張機能の設定を追加
 @ComponentScan(basePackageClasses = { WebClientConfigPackage.class, S3ConfigPackage.class, LoggingConfigPackage.class })
@@ -24,25 +20,19 @@ import com.example.fw.common.objectstorage.config.S3ConfigPackage;
 @Import({ MetricsConfig.class })
 public class InfraConfig {
 
-    /**
-     * WebClientでのエラーハンドラークラス
-     */
+    /// WebClientでのエラーハンドラークラス
     @Bean
     WebClientResponseErrorHandler webClientResponseErrorHandler() {
         return new WebClientResponseErrorHandler();
     }
 
-    /**
-     * Repositoryの性能ログ用のロギングクラス
-     */
+    /// Repositoryの性能ログ用のロギングクラス
     @Bean
     LogAspect logAspect() {
         return new LogAspect();
     }
 
-    /**
-     * RestTemplateの設定
-     */
+    /// RestTemplateの設定
 //    @Bean
 //    RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
 //        // ログ出力クラスの設定

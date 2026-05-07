@@ -7,21 +7,16 @@ import com.example.fw.common.exception.BusinessException;
 
 import reactor.core.publisher.Mono;
 
-/**
- * CircuitBreakerでのエラー時のデフォルトのフォールバック処理を実装するクラス
- *
- */
+/// CircuitBreakerでのエラー時のデフォルトのフォールバック処理を実装するクラス
 public class CircuitBreakerErrorFallback {
     private CircuitBreakerErrorFallback() {
     }
 
-    /**
-     * RestTemplateでのデフォルトのフォールバック処理として、業務例外を返却する
-     * 
-     * @param <T> CircuiteBreakerでRestTemplateがデータ返却する際の型パラメータ
-     * @return T
-     * @throws BusinessException 業務例外
-     */
+    /// RestTemplateでのデフォルトのフォールバック処理として、業務例外を返却する
+    ///
+    /// @param <T> CircuitBreakerでRestTemplateがデータ返却する際の型パラメータ
+    /// @return T
+    /// @throws BusinessException 業務例外
     public static <T> Function<Throwable, T> throwBusinessException() {
         return throwable -> {
             // RestTemplateResponseErrorHandlerですでに業務例外をスローしていた場合
@@ -33,11 +28,9 @@ public class CircuitBreakerErrorFallback {
         };
     }
 
-    /**
-     * WebClientでのデフォルトのフォールバック処理として、業務例外を返却する
-     * @param <T> CircuiteBreakerでWebClientがデータ返却する際の型パラメータ
-     * @return 業務例外
-     */
+    /// WebClientでのデフォルトのフォールバック処理として、業務例外を返却する
+    /// @param <T> CircuitBreakerでWebClientがデータ返却する際の型パラメータ
+    /// @return 業務例外
     public static <T> Function<Throwable, Mono<T>> returnMonoBusinessException() {
         return throwable -> {
             // WebClientResponseErrorHandlerですでに業務例外をスローしていた場合

@@ -14,10 +14,8 @@ import com.example.batch.infra.httpclient.CircuitBreakerErrorFallback;
 
 import lombok.RequiredArgsConstructor;
 
-/**
- * TodoRepositoryの実装 BackendサービスのREST APIを呼び出す
- */
-//WebClient（WebFulx）版のTodoRepository実装を使用しているためコメントアウト
+/// TodoRepositoryの実装 BackendサービスのREST APIを呼び出す
+//WebClient（WebFlux）版のTodoRepository実装を使用しているためコメントアウト
 //@Repository
 @RequiredArgsConstructor
 public class TodoRepositoryImplForBatchByRestTemplate implements TodoRepository {

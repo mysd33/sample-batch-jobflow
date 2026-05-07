@@ -17,11 +17,7 @@ import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sfn.SfnClient;
 
-/**
- * 
- * ジョブフローによる起動用の設定クラス（本番用）
- *
- */
+/// ジョブフローによる起動用の設定クラス（本番用）
 @Profile("!dev")
 @Configuration
 @RequiredArgsConstructor
@@ -31,20 +27,16 @@ import software.amazon.awssdk.services.sfn.SfnClient;
 public class JobflowProdConfig {
     private final JobflowConfigurationProperties jobflowConfigurationProperties;
 
-    /**
-     * StepFunctionsクライアント
-     */
+    /// StepFunctionsクライアント
     @Bean
     SfnClient sfnClient() {
         Region region = Region.of(jobflowConfigurationProperties.getRegion());
-        return SfnClient.builder().httpClientBuilder((ApacheHttpClient.builder()))//
+        return SfnClient.builder().httpClientBuilder(ApacheHttpClient.builder())//
                 .region(region)//
                 .build();
     }
 
-    /**
-     * StepFunctionsでのジョブ間の結果受け渡し用のクラス
-     */
+    /// StepFunctionsでのジョブ間の結果受け渡し用のクラス
     @Bean
     SfnTaskResultSender sfnTaskResultSender(ObjectMapper objectMapper,
             SfnTaskResultPersistService taskResultPersistService) {

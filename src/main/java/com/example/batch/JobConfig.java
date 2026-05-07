@@ -29,19 +29,13 @@ import com.example.fw.batch.core.exception.DefaultExceptionHandler;
 import com.example.fw.batch.core.exception.ExceptionHandler;
 import com.example.fw.batch.jobflow.config.JobflowConfigPackage;
 
-/**
- * 
- * Job層のSpringBatchの設定クラス
- *
- */
+/// Job層のSpringBatchの設定クラス
 @Configuration
 // バッチAP実行制御機能とジョブフロー実行支援機能の有効化
 @ComponentScan(basePackageClasses = { SpringBatchConfigPackage.class, JobflowConfigPackage.class })
 public class JobConfig {
 
-    /**
-     * 集約例外ハンドリングクラス
-     */
+    /// 集約例外ハンドリングクラス
     @Bean
     ExceptionHandler defaultExceptionHandler(MessageSource messageSource) {
         return DefaultExceptionHandler.builder()//
@@ -51,11 +45,9 @@ public class JobConfig {
                 .build();
     }
 
-    /**
-     * TodoListのFileItemReaderクラス
-     * 
-     * @param filePathName ファイルパス名
-     */
+    /// TodoListのFileItemReaderクラス
+    ///
+    /// @param filePathName ファイルパス名
     @StepScope
     @Bean
     FlatFileItemReader<TodoRecord> todoListFileItemReader(
@@ -65,45 +57,36 @@ public class JobConfig {
                 .targetType(TodoRecord.class).encoding("UTF-8").build();
     }
 
-    /**
-     * バッチの単項目入力チェック機能のSpring Batch用のValidatorクラス
-     * 
-     * @param beanValidator Bean ValidationのValidatorクラス
-     */
+    /// バッチの単項目入力チェック機能のSpring Batch用のValidatorクラス
+    ///
+    /// @param beanValidator Bean ValidationのValidatorクラス
     @Bean
     SpringValidator<?> validator(Validator beanValidator) {
-        SpringValidator<?> springValidator = new SpringValidator<>();
+        var springValidator = new SpringValidator<>();
         springValidator.setValidator(beanValidator);
         return springValidator;
     }
 
-    /**
-     * バッチの単項目入力チェック機能のBeanValidatorクラス
-     */
+    /// バッチの単項目入力チェック機能のBeanValidatorクラス
     @Bean
     Validator beanValidator() {
-        try (LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean()) {
+        try (var localValidatorFactoryBean = new LocalValidatorFactoryBean()) {
             localValidatorFactoryBean.afterPropertiesSet();
             return localValidatorFactoryBean;
         }
     }
 
-    /**
-     * バッチのTodo用の相関項目入力チェック機能のSpring Batch用のValidatorクラス
-     * 
-     * @param todoRecordCustomValidator TodoRecord用の相関項目入力チェック機能のValidatorクラス
-     */
+    /// バッチのTodo用の相関項目入力チェック機能のSpring Batch用のValidatorクラス
+    ///
+    /// @param todoRecordCustomValidator TodoRecord用の相関項目入力チェック機能のValidatorクラス
     @Bean
     SpringValidator<?> todoRecordSpringValidator(Validator todoRecordCustomValidator) {
-        SpringValidator<?> springValidator = new SpringValidator<>();
+        var springValidator = new SpringValidator<>();
         springValidator.setValidator(todoRecordCustomValidator);
         return springValidator;
     }
 
-    /**
-     * ユーザテーブル用ItemReaderクラス（Partitioning Step用にlimit, offsetで取得）
-     * 
-     */
+    /// ユーザテーブル用ItemReaderクラス（Partitioning Step用にlimit, offsetで取得）
     @StepScope
     @Bean
     MyBatisCursorItemReader<User> userTableItemReader(SqlSessionFactory sqlSessionFactory,
@@ -115,10 +98,7 @@ public class JobConfig {
                 .build();
     }
 
-    /**
-     * ユーザ一時テーブル用ItemWriterクラス
-     * 
-     */
+    /// ユーザ一時テーブル用ItemWriterクラス
     @StepScope
     @Bean
     MyBatisBatchItemWriter<UserTempInfo> userTempTableItemWriter(SqlSessionFactory sqlSessionFactory) {

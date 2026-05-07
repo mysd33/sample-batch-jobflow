@@ -1,8 +1,6 @@
 package com.example.batch.domain.message;
-/**
- * Message Id
- * Auto-Generarted By MessageKeysGen Class
- */
+/// Message Id
+/// Auto-Generarted By MessageKeysGen Class
 public class MessageIds {
     private MessageIds() {}
     public static final String W_EX_2001 = "w.ex.2001";
