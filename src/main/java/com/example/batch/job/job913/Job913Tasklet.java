@@ -9,8 +9,6 @@ import org.springframework.batch.infrastructure.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.example.batch.job.job901.Job901ResultData;
-import com.example.batch.job.job902.Job902ResultData;
 import com.example.fw.batch.jobflow.sfn.SfnTaskResultSender;
 import com.example.fw.common.logging.ApplicationLogger;
 import com.example.fw.common.logging.LoggerFactory;
