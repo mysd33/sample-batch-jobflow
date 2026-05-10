@@ -1,5 +1,6 @@
 package com.example.batch.job.job913;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
@@ -10,7 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 @Value
 @Builder
 @Jacksonized
-public class Job913InputData {
+public class Job913InputDataList {
 
-    String result;
+    List<Job913InputData> jobResultList;
 }
