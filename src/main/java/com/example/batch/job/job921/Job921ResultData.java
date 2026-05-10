@@ -1,0 +1,15 @@
+package com.example.batch.job.job921;
+
+import lombok.Builder;
+import lombok.Value;
+
+/// Job921Taskletの処理結果を格納するクラス<br>
+///
+/// ジョブフローの後続ジョブへ結果を渡すためのクラスの例
+@Value
+@Builder
+public class Job921ResultData {
+
+    // 処理結果の例
+    String result;
+}

@@ -77,6 +77,3 @@ example:
     retry:
       max-attempts: 3
       min-backoff: 200
-
-  job002:
-    chunk-size: 5

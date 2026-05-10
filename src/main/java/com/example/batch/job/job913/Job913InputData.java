@@ -8,11 +8,12 @@ import lombok.extern.jackson.Jacksonized;
 
 /// Job913Taskletの入力データを格納するクラス<br>
 ///
-/// Job901とJob902の処理結果をJSON文字列の配列で受け取るためのクラスの例
+/// Step FunctionsのParallelでJob901とJob902の並列の処理結果をJSON文字列の配列で受け取るためのクラスの例
 @Value
 @Builder
 @Jacksonized
 public class Job913InputData {
+
     // Job901とJob902の処理結果JSON文字列のリスト
     List<String> jobResultList;
 }
