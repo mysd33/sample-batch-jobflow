@@ -1,7 +1,5 @@
 package com.example.batch.job.job923;
 
-import java.util.List;
-
 import lombok.Builder;
 import lombok.Value;
 import lombok.extern.jackson.Jacksonized;
@@ -15,5 +13,6 @@ import lombok.extern.jackson.Jacksonized;
 public class Job923InputData {
 
     // Step FunctionsでのMapのJob922の多重実行の処理結果をまとめた文字列のリスト
-    List<String> jobResultList;
+    String result;
+
 }

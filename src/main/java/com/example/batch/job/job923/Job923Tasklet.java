@@ -1,8 +1,10 @@
 package com.example.batch.job.job923;
 
+import com.example.batch.job.job913.Job913InputData;
 import com.example.fw.batch.jobflow.sfn.SfnTaskResultSender;
 import com.example.fw.common.logging.ApplicationLogger;
 import com.example.fw.common.logging.LoggerFactory;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
@@ -13,8 +15,7 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.infrastructure.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import java.util.List;
-
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
 /// Job923のTasklet<br>
@@ -23,7 +24,7 @@ import tools.jackson.databind.ObjectMapper;
 ///
 /// ``````
 ///
-/// java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job923 inputData="{\"jobResultList\":[\"result_job922_0\",\"result_job922_1\"]}"
+/// java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job923 inputData="[{\"result\":\"result_job922_0\"},{\"result\":\"result_job922_1\"}]"
 /// ``````
 @StepScope
 @Component
@@ -48,12 +49,13 @@ public class Job923Tasklet implements Tasklet {
         @NonNull ChunkContext chunkContext) throws Exception {
         appLogger.debug("Job923Tasklet実行[inputData:{}]", inputData);
         // Job922の処理結果取得
-        Job923InputData job923InputData = objectMapper.readValue(inputData, Job923InputData.class);
-
+        List<Job913InputData> job913InputDataList = objectMapper.readValue(inputData,
+            new TypeReference<>() {
+            });
         // Job922のMapでの多重処理結果取得
-        List<String> resultList = job923InputData.getJobResultList();
-        for (int i = 0; i < resultList.size(); i++) {
-            appLogger.debug("Job922から受け取った処理結果[index:{}, result:{}]", i, resultList.get(i));
+        for (int i = 0; i < job913InputDataList.size(); i++) {
+            appLogger.debug("Job922から受け取った処理結果[index:{}, result:{}]", i,
+                job913InputDataList.get(i));
         }
 
         // 処理結果はダミーの値をセットしている。
