@@ -1,11 +1,6 @@
 # SpringBootのジョブフローの純バッチアプリケーションサンプル
 
-> [!WARNING]
->
-> 現在、サンプルAPを作成中です。
-
-
-## 概要
+## 1. 概要
 * Spring BootでAWS Step Functionsを使って、ステートマシンをジョブの実行順序を管理するジョブフローとして実行する、バッチのサンプルAPである。
 * アプリケーションは、Spring Batchを使用しており、コマンドライン引数で指定されたジョブIDとジョブの入力データをもとに、ジョブを実行するようになっている。
 * Step Functionsのステートマシンからジョブの実行順序制御（実行順序制御するフローを「ジョブフロー」と呼ぶことにする）を行う。
@@ -23,33 +18,58 @@
 ![ソフトウェアアーキテクチャ（チャンク）](img/architecture-chunk.png)
 
 
-## プロジェクト構成
+## 2. プロジェクト構成
 * sample-batch-flow
     * 本プロジェクト。Spring Bootのバッチアプリケーションで、Step Functionsを介してジョブを処理することが可能である。    
         * デフォルトでは「spring.profiles.active」プロパティが「dev」になっている。プロファイルdevの場合は、RDB永続化にはH2DBによる組み込みDBになっている。
         * プロファイルproductionの場合は、RDB永続化にはPostgreSQL（AWS上はAurora等）になっている。
 
-## 事前準備
-* 以下のライブラリを用いているので、EclipseのようなIDEを利用する場合には、プラグインのインストールが必要
+## 3. 事前準備
+* 以下のライブラリを用いているので、EclipseやIntelliJのようなIDEを利用する場合には、プラグインのインストールが必要
     * [Lombok](https://projectlombok.org/)
         * [Eclipseへのプラグインインストール](https://projectlombok.org/setup/eclipse)
         * [IntelliJへのプラグインインストール](https://projectlombok.org/setup/intellij)
     * [Mapstruct](https://mapstruct.org/)
         * [EclipseやIntelliJへのプラグインインストール](https://mapstruct.org/documentation/ide-support/)
 
-## 動作手順
+
+## 4. IDEでのアプリ起動
 
 * Step Functionsを使ったAWS上での動作確認は、[こちら](https://github.com/mysd33/ecs-on-fargate-adot-cfn-demo)のCloudFormationのサンプルテンプレートを利用して、AWS上にAPをデプロイし、Step Functionsのステートマシンからジョブフローを実行することで可能である。
 
+* このため、ローカル上でのAP動作は、ジョブごとでの実行のみが可能である。
 
-* ローカル上でのAP動作は、ジョブごとでの実行のみが可能である。
+* com.example.batch.SampleBatchJobflowApplicationを起動することで、SpringBootのバッチアプリケーションが起動する。
+* コマンド引数として、以下のようなダミー値を渡す。
+    * Job901
+        * `--spring.batch.job.name=job901 inputData=input901`    
+    * Job902
+        * `--spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}"`
+    * Job911
+        * `--spring.batch.job.name=job911 inputData=input911`
+    * Job912
+        * `--spring.batch.job.name=job912 inputData=input912`
+    * Job913
+        * `--spring.batch.job.name=job913 inputData="[{\"result\":\"result_job911\"},{\"result\":\"result_job912\"}]"`
+    * Job921
+        * `--spring.batch.job.name=job921 inputData=input921`    
+    * Job922
+        * `--spring.batch.job.name=job922 inputData="{\"result\":\"result_921_0\"}"`
+    * Job923
+        * `--spring.batch.job.name=job923 inputData="[{\"result\":\"result_job922_0\"},{\"result\":\"result_job922_1\"}]"`
+* 本来は、OS環境変数として`TASK_TOKEN`を渡す必要があるが、ローカルでの実行では省略可能である。
+
+## 5. Spring Bootの実行可能jarでの実行
+* TBD
+
+
+## 6. プロファイル「production」でのローカル実行
+* 「production」に切り替えるには、例えばJVM引数を「-Dspring.profiles.active=production」に変更するか、環境変数「SPRING_PROFILES_ACTIVE=production」を設定する等で起動する。
 
 > [!WARNING]
->
-> 現在、執筆中
+> 以降の手順が、最新化できていないので、今後見直し予定。
 
-
-## PostgreSQLのローカル起動
+### 6.1. PostgreSQLのローカル起動
 * Profileが「dev」でSpringBootアプリケーションを実行する場合、H2DBが起動するので、何もしなくてよい。
 * Profileが「production」に切り替えてSpringBootアプリケーションを実行する場合、DBがPostgreSQLで動作する設定になっているため、事前にPostgreSQLを起動する必要がある。
     * AWS上でAPを起動する場合はAurora for PostgreSQLや、RDS for PostgreSQLを起動しておくことを想定している。
@@ -65,7 +85,7 @@ docker exec -i -t test-postgres /bin/bash
 postgres> CREATE DATABASE testdb;
 ```
 
-## S3の設定
+### 6.2. S3の設定
 * Profileが「dev」でSpringBootアプリケーションを実行する場合、S3アクセスは無効化し、ローカルのファイルシステムアクセスする設定になっている。
     * application-dev.ymlの「example.s3.localfake.type」が「file」であり、「example.s3.localfake.base-dir」を一時保存するファイルシステムのディレクトリパスが現状、C:\tmpになっているので、フォルダの変更が必要な場合は、変更する。
         * 「sample-bff」アプリケーション側も変更が必要
@@ -87,7 +107,7 @@ postgres> CREATE DATABASE testdb;
         * [MinIOのダウンロードサイト](https://www.min.io/download/aistor-server?platform=windows)の手順にしたがってコマンドを実行しminio.exeをダウンロードする。
         * [REQUEST TRIAL LICENSE]のボタンをクリックし、必要事項を記入しライセンスキーを取得する。（メールアドレス宛にライセンスキーのメールが届くので、メール内のリンクをクリックしてライセンキーを確認する）
         * 取得したライセンスキーを、`minio.license`というファイル名で保存する
-    
+
         * 以下は、Windows版での起動例
             * C:\minioフォルダにminio.exe、minio.licenseを格納して、起動した例（デフォルトポート9000番ポートで起動、コンソールは9001番ポートで起動するので適宜変更すること）
 
@@ -179,8 +199,13 @@ postgres> CREATE DATABASE testdb;
     * application-production.ymlの「aws.s3.bucket」プロパティを作成したバケット名に変更する。
     * APがS3にアクセスする権限が必要なので、開発端末上でローカル実行する場合はS3のアクセス権限をもったIAMユーザのクレデンシャル情報が「%USERPROFILE%/.aws/credentials」や「~/.aws/credentials」に格納されている、もしくはEC2やECS等のAWS上のラインタイム環境で実行する場合は対象のAWSリソースにSQSのアクセス権限を持ったIAMロールが付与されている必要がある。
 
+* Profileが「production」でローカル実行する場合、上に「dev」の場合の記載の手順同様に、MinIO等のS3のFakeをローカルで起動しておく必要がある。
 
-## Dockerでのアプリ起動
+## 7. Dockerでのアプリ起動
+
+> [!WARNING]
+> 以降の手順が、最新化できていないので、今後見直し予定。
+
 * Mavenビルド
 ```sh
 #Windows
@@ -192,6 +217,8 @@ postgres> CREATE DATABASE testdb;
 ```sh
 docker build -t XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest .
 ```
+
+### 7.1. ローカルでDocker実行（Profileを「dev」でSpringBoot実行）の場合
 
 * ローカルでDocker実行（Profileを「dev」でSpringBoot実行）
 ```sh
@@ -205,6 +232,8 @@ docker run --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=dev,log_conta
 --spring.batch.job.name=job901 inputData=input901
 ```
 
+### 7.2. ローカルでDocker実行（Profileを「production」でSpringBoot実行）　の場合
+
 
 * ローカルでDocker実行（Profileを「production」でSpringBoot実行）　
     * ※PostgreSQLのローカル起動も必要
@@ -216,13 +245,20 @@ docker run -v %USERPROFILE%\.aws\:/home/app/.aws/ --name samplebatch-jobflow --e
 docker run -v %USERPROFILE%\.aws\:/home/app/.aws/ --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=production,log_container --env TASK_TOKEN=dummy --env SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/testdb XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest --spring.batch.job.name=job901 inputData=input901
 ```
 
-* ECRプッシュ
+
+## 8. ECRプッシュ
+* AWS上でECSやEKS等で動作させる場合は、事前にECRへDockerイメージをプッシュしておく必要がある。
+
 ```sh
 aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com
 docker push XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest
 ```
 
-## ソフトウェアフレームワーク
+## 9. AWS上でのアプリ起動
+* SpringBoot APをECS/Fargate等で動作させる場合は、[ecs-on-fargate-adot-cfn-demo](https://github.com/mysd33/ecs-on-fargate-adot-cfn-demo)を参照する。
+
+
+## 10. ソフトウェアフレームワーク
 * 本サンプルアプリケーションでは、ソフトウェアフレームワーク実装例も同梱している。簡単のため、アプリケーションと同じプロジェクトでソース管理している。
 * ソースコードはcom.example.fwパッケージ配下に格納されている。    
     * 本格的な開発を実施する場合には、業務アプリケーションと別のGitリポジトリとして管理し、CodeArtifactやSonatype NEXUSといったライブラリリポジトリサーバでjarを管理し、pom.xmlから参照するようにすべきであるし、テストやCI/CD等もちゃんとすべきであるが、ここでは、あえて同じプロジェクトに格納してノウハウを簡単に参考にしてもらいやすいようにしている。
