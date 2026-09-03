@@ -75,7 +75,7 @@ example:
   batch:
     type: commandline
   sfn:
-    enable: true
+    enabled: true
 
   # 業務APの設定(Step FunctionsのMapの処理例のサイズを調整）
   job921:
