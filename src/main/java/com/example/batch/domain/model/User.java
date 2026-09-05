@@ -2,13 +2,11 @@ package com.example.batch.domain.model;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
-
-import com.example.batch.domain.rule.CalendarRules;
-
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /// ユーザクラス
 @Data
@@ -16,20 +14,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 //MapStructでのadminプロパティのコピーがうまくいかないので@Builderは入れないこと
 public class User implements Serializable {
+
     @Serial
-    private static final long serialVersionUID = -8506834435303865959L;    
+    private static final long serialVersionUID = -8506834435303865959L;
     private static final String ROLE_GENERAL = "ROLE_GENERAL";
-    private static final String ROLE_ADMIN = "ROLE_ADMIN";    
+    private static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     private String userId;
+    @ToString.Exclude
     private String password;
     private String userName;
-    private Date birthday;
+    private LocalDate birthday;
     private String role;
-
-    public int getAge() {
-        return CalendarRules.calcAge(birthday);
-    }
+    private long version;
 
     public void setAdmin(boolean admin) {
         setRole(admin ? ROLE_ADMIN : ROLE_GENERAL);
