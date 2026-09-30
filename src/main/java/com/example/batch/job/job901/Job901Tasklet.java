@@ -1,5 +1,7 @@
 package com.example.batch.job.job901;
 
+import java.security.SecureRandom;
+
 import org.jspecify.annotations.NonNull;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -31,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Job901Tasklet implements Tasklet {
     private static final ApplicationLogger appLogger = LoggerFactory.getApplicationLogger(log);
     private final SfnTaskResultSender sfnTaskResultSender;
+    private final SecureRandom random = new SecureRandom();
 
     // ジョブパラメータの例
     @Value("#{jobParameters['inputData']}")
@@ -45,7 +48,8 @@ public class Job901Tasklet implements Tasklet {
         appLogger.debug("Job901Tasklet実行[inputData:{}]", inputData);
         // 処理結果はダミーの値をセットしている。
         // 実際はJob901Taskletの処理結果をセットする。
-        Job901ResultData job901ResultData = Job901ResultData.builder().result("result_job901").build();
+        Job901ResultData job901ResultData = Job901ResultData.builder()
+                .result(random.nextBoolean()).build();
 
         // ジョブフローの後続ジョブへ結果を渡すために、StepFunctionsのタスクの実行成功を送信する
         sfnTaskResultSender.sendTaskSuccess(taskToken, job901ResultData);

@@ -42,9 +42,12 @@
 * com.example.batch.SampleBatchJobflowApplicationを起動することで、SpringBootのバッチアプリケーションが起動する。
 * コマンド引数として、以下のようなダミー値を渡す。
     * Job901
-        * `--spring.batch.job.name=job901 inputData=input901`    
+        * `--spring.batch.job.name=job901 inputData=input901`
+        * 処理結果の`result`には、boolean型の`true`または`false`をランダムに設定する。
     * Job902
-        * `--spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}"`
+        * `--spring.batch.job.name=job902 inputData="{\"result\":true}"`
+    * Job903
+        * `--spring.batch.job.name=job903 inputData="{\"result\":\"result_job902\"}"`
     * Job911
         * `--spring.batch.job.name=job911 inputData=input911`
     * Job912
@@ -225,7 +228,7 @@ docker build -t XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-j
 # job901を実行する例。引数で、ジョブID、ジョブの入力データ、タスクトークンを渡す例。
 docker run --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=dev,log_default --env TASK_TOKEN=dummy XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest --spring.batch.job.name=job901 inputData=input901
 # job902を実行する例。引数で、ジョブID、ジョブの入力データ、タスクトークンを渡す例。
-docker run --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=dev,log_default --env TASK_TOKEN=dummy XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest --spring.batch.job.name=job902 inputData="{\"result\":\"result_job901\"}" taskToken=dummy
+docker run --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=dev,log_default --env TASK_TOKEN=dummy XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest --spring.batch.job.name=job902 inputData="{\"result\":true}" taskToken=dummy
 
 #logをjson形式に変更する場合
 docker run --name samplebatch-jobflow --env SPRING_PROFILES_ACTIVE=dev,log_container --env TASK_TOKEN=dummy XXXXXXXXXXXX.dkr.ecr.ap-northeast-1.amazonaws.com/sample-batch-jobflow:latest

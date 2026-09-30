@@ -1,4 +1,4 @@
-package com.example.batch.job.job902;
+package com.example.batch.job.job903;
 
 import org.jspecify.annotations.NonNull;
 import org.springframework.batch.core.configuration.annotation.StepScope;
@@ -9,7 +9,7 @@ import org.springframework.batch.infrastructure.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.example.batch.job.job901.Job901ResultData;
+import com.example.batch.job.job902.Job902ResultData;
 import com.example.fw.batch.jobflow.sfn.SfnTaskResultSender;
 import com.example.fw.common.logging.ApplicationLogger;
 import com.example.fw.common.logging.LoggerFactory;
@@ -18,19 +18,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tools.jackson.databind.ObjectMapper;
 
-/// Job902のTasklet<br>
+/// Job903のTasklet<br>
 ///
 /// コマンドライン実行例
 ///
 /// ``````
 ///
-/// java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job902 inputData="{\"result\":true}"
+/// java -jar app.jar --spring.profiles.active=production,log_default --spring.batch.job.name=job903 inputData="{\"result\":\"result_job902\"}"
 /// ``````
 @StepScope
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class Job902Tasklet implements Tasklet {
+public class Job903Tasklet implements Tasklet {
     private static final ApplicationLogger appLogger = LoggerFactory.getApplicationLogger(log);
     private final SfnTaskResultSender sfnTaskResultSender;
     private final ObjectMapper objectMapper;
@@ -45,16 +45,16 @@ public class Job902Tasklet implements Tasklet {
 
     @Override
     public RepeatStatus execute(@NonNull StepContribution contribution, @NonNull ChunkContext chunkContext) throws Exception {
-        appLogger.debug("Job902Tasklet実行[inputData:{}]", inputData);
-        // Job901の処理結果取得
-        Job901ResultData job901ResultData = objectMapper.readValue(inputData, Job901ResultData.class);
-        appLogger.debug("Job901から受け取った処理結果[result:{}]", job901ResultData.isResult());
+        appLogger.debug("Job903Tasklet実行[inputData:{}]", inputData);
+        // Job902の処理結果取得
+        Job902ResultData job902ResultData = objectMapper.readValue(inputData, Job902ResultData.class);
+        appLogger.debug("Job902から受け取った処理結果[result:{}]", job902ResultData.getResult());
 
         // 処理結果はダミーの値をセットしている。
-        // 実際はJob902Taskletの処理結果をセットする。
-        Job902ResultData job902ResultData = Job902ResultData.builder().result("result_job902").build();
+        // 実際はJob903Taskletの処理結果をセットする。
+        Job903ResultData job903ResultData = Job903ResultData.builder().result("result_job903").build();
         // ジョブフローの後続ジョブへ結果を渡すために、StepFunctionsのタスクの実行成功を送信する
-        sfnTaskResultSender.sendTaskSuccess(taskToken, job902ResultData);
+        sfnTaskResultSender.sendTaskSuccess(taskToken, job903ResultData);
 
         return RepeatStatus.FINISHED;
     }
